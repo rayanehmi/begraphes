@@ -1,3 +1,4 @@
+/*test*/
 package org.insa.graphs.algorithm.carpooling;
 
 import org.insa.graphs.algorithm.AbstractAlgorithm;
