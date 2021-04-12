@@ -32,32 +32,46 @@ public class Path {
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+    	
+    	//Handler for single nodes or void arguments
+    	if (nodes.size() == 0) {
+        	return new Path(graph);
+        }
+        if (nodes.size() == 1) {
+        	return new Path(graph, nodes.get(0));
+        }
+        
         List<Arc> arcs = new ArrayList<Arc>();
         
-        //For each nodes in the given list
+        //For each nodes in the given list, except the last
         for (int i = 0; i < nodes.size()-1; i++) {
         	
         	//Initialization
         	Node node1 = nodes.get(i); //Origin
         	Node node2 = nodes.get(i+1); //Destination
-        	//while (node1.getSuccessors().get(i).getDestination())
-        	Arc fastest = node1.getSuccessors().get(0); //Fastest arc is the first by default, even if it doesn't go to node2
-        	//CHANGER POUR QUE LE PREMIER SOIT VALIDE
-        	//Test for each arc between the nodes
+        	//Fastest arc is the first by default, even if it doesn't go to node2
+        	Arc fastest = node1.getSuccessors().get(0);
+
+        	//Test for each arc between the nodes and look for a faster arc, or at least one that goes to node2
         	for (int k = 1; k < node1.getNumberOfSuccessors();k++) {
         		Arc candidat = node1.getSuccessors().get(k);
         		if (candidat.getDestination() == node2) { //Is the arc going where we want it to ?
-        			if (candidat.getMinimumTravelTime() < fastest.getMinimumTravelTime() ) { // Is it faster ?
+        			
+        			//if the first candidate wasn't going to node2 or if we found a faster arc
+        			if (fastest.getDestination() != node2 || candidat.getMinimumTravelTime() < fastest.getMinimumTravelTime() ) { // Is it faster ?
         				fastest = candidat; // Update the fastest arc found
         			}
         		}
         	}
+        	
     		if (node2 != fastest.getDestination()) { // if nodes aren't connected
     			throw (new IllegalArgumentException());
     		}
+    		
     		//If everything is OK, we append the fastest arc to the final list
     		arcs.add(fastest);
         }
+
         return new Path(graph, arcs);
     }
 
@@ -72,13 +86,48 @@ public class Path {
      * 
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
-     * 
-     * @deprecated Need to be implemented.
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+    	//Handler for single nodes or void arguments
+    	if (nodes.size() == 0) {
+        	return new Path(graph);
+        }
+        if (nodes.size() == 1) {
+        	return new Path(graph, nodes.get(0));
+        }
+        
         List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        
+        //For each nodes in the given list, except the last
+        for (int i = 0; i < nodes.size()-1; i++) {
+        	
+        	//Initialization
+        	Node node1 = nodes.get(i); //Origin
+        	Node node2 = nodes.get(i+1); //Destination
+        	//shortest arc is the first by default, even if it doesn't go to node2
+        	Arc shortest = node1.getSuccessors().get(0);
+
+        	//Test for each arc between the nodes and look for a faster arc, or at least one that goes to node2
+        	for (int k = 1; k < node1.getNumberOfSuccessors();k++) {
+        		Arc candidat = node1.getSuccessors().get(k);
+        		if (candidat.getDestination() == node2) { //Is the arc going where we want it to ?
+        			
+        			//if the first candidate wasn't going to node2 or if we found a faster arc
+        			if (shortest.getDestination() != node2 || candidat.getLength() < shortest.getLength() ) { // Is it faster ?
+        				shortest = candidat; // Update the shortest arc found
+        			}
+        		}
+        	}
+        	
+    		if (node2 != shortest.getDestination()) { // if nodes aren't connected
+    			throw (new IllegalArgumentException());
+    		}
+    		
+    		//If everything is OK, we append the shortest arc to the final list
+    		arcs.add(shortest);
+        }
+
         return new Path(graph, arcs);
     }
 
