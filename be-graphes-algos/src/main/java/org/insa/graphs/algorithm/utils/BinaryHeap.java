@@ -137,7 +137,17 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
 
     @Override
     public void remove(E x) throws ElementNotFoundException {
-        // TODO:
+    	
+    	//Handler empty heap
+        if (this.size() == 0) {
+        	throw new ElementNotFoundException(x);
+        }
+        
+        //Optimized element index search (deprecated)
+        int k = this.array.indexOf(x);
+        int indexLast = this.size();
+        }
+        
     }
 
     @Override
@@ -155,6 +165,7 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         this.percolateDown(0);
         return minItem;
     }
+    
 
     /**
      * Creates a multi-lines string representing a sorted view of this binary heap.
@@ -201,5 +212,6 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     public String toString() {
         return BinaryHeapFormatter.toStringTree(this, 8);
     }
+    
 
 }
