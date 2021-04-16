@@ -13,7 +13,9 @@ import java.util.ArrayList;
  */
 public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
 
-    // Number of elements in heap.
+    private static final String NULL = null;
+
+	// Number of elements in heap.
     private int currentSize;
 
     // The heap array.
@@ -146,9 +148,10 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         //Optimized element index search (deprecated)
         int k = this.array.indexOf(x);
         int indexLast = this.size();
-        }
-        
+        return;
     }
+        
+  
 
     @Override
     public E findMin() throws EmptyPriorityQueueException {
