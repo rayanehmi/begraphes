@@ -145,9 +145,43 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         	throw new ElementNotFoundException(x);
         }
         
-        //Optimized element index search (deprecated)
         int k = this.array.indexOf(x);
-        int indexLast = this.size();
+        if (k == -1) {
+        	throw new ElementNotFoundException(x);
+        }
+        /* Optimized element index search : deprecated
+        int etage = 0;
+        int i = 0;
+        int nbEtage = (int) (Math.log(this.size())/Math.log(2)) + 1 ;
+        boolean trouve = false;
+        while ( (etage < nbEtage) && !trouve) {
+        	i = (int) Math.pow(2, etage) - 1 ; //Cursor on the beginning of a stage
+        	while (i < (int) Math.pow(2, etage + 1) - 1) {
+        		if (this.array.get(i) == x) {
+        			int indexElem = i;
+        			trouve = true;
+        		}
+        		i++;
+        	}
+        	etage++;
+        }
+
+        //If we haven't found the element, throw an error
+        if (!trouve) { 
+        	throw new ElementNotFoundException(x);
+        }
+        */
+        
+        //Swap element with the last element
+        int indexLast = this.size() - 1;
+        E pivot = this.array.get(indexLast);
+        this.arraySet(indexLast, x);
+        this.arraySet(k, pivot);
+        
+        //Restore heap property
+        this.percolateDown(k);
+
+        
         return;
     }
         
