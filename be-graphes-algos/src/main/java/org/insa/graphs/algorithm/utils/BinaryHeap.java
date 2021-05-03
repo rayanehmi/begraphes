@@ -140,52 +140,83 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     @Override
     public void remove(E x) throws ElementNotFoundException {
     	
-    	//Handler empty heap
-        if (this.size() == 0) {
-        	throw new ElementNotFoundException(x);
-        }
+    	if (isEmpty())
+            throw new ElementNotFoundException(x);
+    	
+    	int index = 0;
+    	int verif = 1;
+    	E elem_fin = this.array.get(this.currentSize - 1);
+    	
+    	while (index<=this.currentSize-1 && verif == 1) {
+    		
+    		if (this.array.get(index) == x ) {
+    			verif = 0;
+    			this.arraySet(index, elem_fin); //Swap the element to delete with the last element
+    			this.currentSize --; //Delete the element
+    		}
+    		index ++;
+    	}
+    	
+    	if (verif == 1) {
+    		throw new ElementNotFoundException(x);
+    	}
         
-        int k = this.array.indexOf(x);
+    	//Restore heap property
+        for (int i= 0;i<this.currentSize;i++) {
+        	percolateDown(i);
+        }
+  
+    }
+    /* first attempt :
+    public void remove(E x) throws ElementNotFoundException {
+    	
+    	//Handler empty heap and not found
+    	int k = this.array.indexOf(x);
         if (k == -1) {
+        	this.currentSize = this.size()-1;
         	throw new ElementNotFoundException(x);
         }
-        /* Optimized element index search : deprecated
-        int etage = 0;
-        int i = 0;
-        int nbEtage = (int) (Math.log(this.size())/Math.log(2)) + 1 ;
-        boolean trouve = false;
-        while ( (etage < nbEtage) && !trouve) {
-        	i = (int) Math.pow(2, etage) - 1 ; //Cursor on the beginning of a stage
-        	while (i < (int) Math.pow(2, etage + 1) - 1) {
-        		if (this.array.get(i) == x) {
-        			int indexElem = i;
-        			trouve = true;
-        		}
-        		i++;
-        	}
-        	etage++;
-        }
-
-        //If we haven't found the element, throw an error
-        if (!trouve) { 
+        if (this.size() <= 0) {
+        	this.currentSize = 0;
         	throw new ElementNotFoundException(x);
         }
-        */
-        
-        //Swap element with the last element
+        //Swap the element to delete with the last element
         int indexLast = this.size() - 1;
         E pivot = this.array.get(indexLast);
         this.arraySet(indexLast, x);
         this.arraySet(k, pivot);
         
+        //Delete the element
+        this.currentSize--;
+        
         //Restore heap property
         this.percolateDown(k);
-
         
         return;
     }
-        
-  
+    
+    Optimized element index search : not finished
+    int etage = 0;
+    int i = 0;
+    int nbEtage = (int) (Math.log(this.size())/Math.log(2)) + 1 ;
+    boolean trouve = false;
+    while ( (etage < nbEtage) && !trouve) {
+    	i = (int) Math.pow(2, etage) - 1 ; //Cursor on the beginning of a stage
+    	while (i < (int) Math.pow(2, etage + 1) - 1) {
+    		if (this.array.get(i) == x) {
+    			int indexElem = i;
+    			trouve = true;
+    		}
+    		i++;
+    	}
+    	etage++;
+    }
+
+    //If we haven't found the element, throw an error
+    if (!trouve) { 
+    	throw new ElementNotFoundException(x);
+    }
+    */
 
     @Override
     public E findMin() throws EmptyPriorityQueueException {
