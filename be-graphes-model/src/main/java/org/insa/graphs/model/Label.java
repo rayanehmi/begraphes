@@ -2,19 +2,21 @@ package org.insa.graphs.model;
 
 public class Label {
 	
-	public Node currentNode,father;
-	public boolean marked;
+	public Node currentNode;
+	public Arc father;
+	public boolean marked = false;
 	public double cost;
-
-	public Label(int id, Node currentNode, double cost, Node father) {
-		this.currentNode = currentNode;
-		boolean marked = false; //True when minimal cost of this node is definitively known by the algorithm
-		this.father = father;
-
+	
+	public double GetCost (Label label) {
+		return label.cost;
 	}
 	
-	public void getCost() {
-		return ;
+	public int compareTo(Label label) {
+		if (this.cost <= label.cost) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
-	
 }
