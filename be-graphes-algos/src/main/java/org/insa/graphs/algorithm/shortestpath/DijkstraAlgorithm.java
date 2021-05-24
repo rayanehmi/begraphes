@@ -1,5 +1,9 @@
 package org.insa.graphs.algorithm.shortestpath;
 
+import java.awt.Label;
+
+import org.insa.graphs.model.Node;
+
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
     public DijkstraAlgorithm(ShortestPathData data) {
@@ -11,6 +15,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         final ShortestPathData data = getInputData();
         ShortestPathSolution solution = null;
         
+        //Initialization
+        Label labelstart;
+        labelstart.currentNode = data.getOrigin();
+        for (Node node : data.graph.nodes) {
+        	
+        }
         /*
         for each vertex V in G          //initialization; initial path set to infinite
 	        path[V] <- infinite

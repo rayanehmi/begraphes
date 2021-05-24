@@ -22,7 +22,7 @@ public abstract class AbstractInputData {
     }
 
     // Graph
-    private final Graph graph;
+    public final Graph graph;
 
     // Arc filter.
     protected final ArcInspector arcInspector;

@@ -24,7 +24,7 @@ public final class Graph {
     private final String mapName;
 
     // Nodes of the graph.
-    private final List<Node> nodes;
+    public final List<Node> nodes;
 
     // Graph information of this graph.
     private final GraphStatistics graphStatistics;
