@@ -1,6 +1,6 @@
 package org.insa.graphs.model;
 
-public class Label {
+public class Label implements Comparable <Label>{
 	
 	public Node currentNode;
 	public Arc father;

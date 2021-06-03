@@ -167,6 +167,22 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         }
   
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /* first attempt :
     public void remove(E x) throws ElementNotFoundException {
     	
